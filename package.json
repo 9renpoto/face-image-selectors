@@ -1,0 +1,38 @@
+{
+  "name": "@app/app",
+  "private": true,
+  "author": "github.com/9renpoto",
+  "scripts": {
+    "build": "turbo build",
+    "storybook": "npm run storybook -w @app/ui",
+    "build-storybook": " npm run build-storybook -w @app/ui",
+    "clean": "turbo run clean",
+    "lint": "eslint . --ext=ts,tsx",
+    "test": "npm run test --workspaces"
+  },
+  "devDependencies": {
+    "@9renpoto/eslint-config-typescript": "^7.0.0",
+    "@9renpoto/tsconfig": "^7.0.0",
+    "@types/rosie": "^0.0.45",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.0",
+    "rosie": "^2.1.0",
+    "turbo": "^1.9.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "deno fmt",
+      "deno lint",
+      "eslint --fix"
+    ],
+    "*.{md,json,js}": [
+      "deno fmt"
+    ]
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "apps/*"
+    ]
+  }
+}
