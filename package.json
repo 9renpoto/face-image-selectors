@@ -5,7 +5,7 @@
   "scripts": {
     "build": "turbo build",
     "storybook": "npm run storybook -w @app/ui",
-    "build-storybook": " npm run build-storybook -w @app/ui",
+    "build-storybook": "npm run build-storybook -w @app/ui",
     "clean": "turbo run clean",
     "lint": "eslint . --ext=ts,tsx",
     "test": "npm run test --workspaces"
