@@ -9,7 +9,10 @@ use opencv::{
     prelude::*,
     types, videoio,
 };
-use std::sync::{Arc, Mutex};
+use std::{
+    env,
+    sync::{Arc, Mutex},
+};
 use tauri::State;
 
 struct Camera(Arc<Mutex<videoio::VideoCapture>>);
@@ -18,8 +21,15 @@ struct Camera(Arc<Mutex<videoio::VideoCapture>>);
 async fn on_trigger(cam: State<'_, Camera>) -> Result<Vec<u8>, ()> {
     let mut cam = cam.0.lock().unwrap();
     let mut image = Mat::default();
-    let mut face_cascade = CascadeClassifier::new("haarcascade_frontalface_default.xml").unwrap();
-    let mut smile_cascade = CascadeClassifier::new("haarcascade_smile.xml").unwrap();
+    let dir = env::current_dir().unwrap();
+    let mut face_cascade = CascadeClassifier::new(
+        dir.join("haarcascade_frontalface_default.xml")
+            .to_str()
+            .unwrap(),
+    )
+    .unwrap();
+    let mut smile_cascade =
+        CascadeClassifier::new(dir.join("haarcascade_smile.xml").to_str().unwrap()).unwrap();
 
     // 画像取得
     cam.read(&mut image).unwrap();
